@@ -65,35 +65,23 @@ d3.csv("assets/data/data.csv").then(function(healthData){
       .append("circle")
       .attr("cx", d => xLinearScale(d.poverty))
       .attr("cy", d => yLinearScale(d.healthcare))
-      .attr("r", "15")
-      .attr("fill", "#89bdd3")
-      .attr("opacity", ".75")
+      .attr("r", "12")
+      .classed("stateCircle", true)
+
       
 
-  //Add state lables to the circles
+  //Add state abbr labels to the circles
 
-  // Initialize tool tip
-    // ==============================
-    var toolTip = d3.tip()
-      .attr("class", "tooltip")
-      .offset([80, -60])
-      .html(function(d) {
-        return (`Poverty: ${d.poverty}<br>Healthcare: ${d.healthcare}`);
-      });
+  var circleLabels = chartGroup.selectAll(".stateText")
+    .data(healthData)
+    .enter()
+    .append("text")
+    .classed('stateText', true)
+    .attr("x", d => xLinearScale(d.poverty))
+    .attr("y", d => yLinearScale(d.healthcare))
+    .text(d => d.abbr)
 
-    // Step 7: Create tooltip in the chart
-    // ==============================
-    chartGroup.call(toolTip);
-
-    // Step 8: Create event listeners to display and hide the tooltip
-    // ==============================
-    circlesGroup.on("click", function(data) {
-      toolTip.show(data, this);
-    })
-      // onmouseout event
-      .on("mouseout", function(data, index) {
-        toolTip.hide(data);
-      });
+ 
 
     // Create axes labels
     chartGroup.append("text")
