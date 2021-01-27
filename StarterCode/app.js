@@ -3,7 +3,7 @@
 
 // Set up our chart area
 //================================
-var svgWidth = 960;
+var svgWidth = 900;
 var svgHeight = 500;
 
 var margin = {
