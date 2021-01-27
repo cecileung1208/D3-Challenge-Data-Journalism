@@ -105,25 +105,36 @@ function renderLabels(circleLabels, newXScale, chosenXAxis, newYScale, chosenYAx
 
 
 // function used for updating circles group with new tooltip
-function updateToolTip(chosenXAxis, circlesGroup, circleLabels) {
+function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, circleLabels) {
 
-
+// Set conditions for choosing x-axis labels
   if (chosenXAxis === "poverty") {
-    var label = "Poverty (%):";
+    var xlabel = "Poverty (%):";
   }
   else if (chosenXAxis ==="age"){
-    var label = "Age (Median):";
+    var xlabel = "Age (Median):";
   }
   else {
-    var label = "Household Income (Median):";
+    var xlabel = "Household Income (Median):";
   }
+
+// Set conditions for choosing y-axis labels
+  if (chosenYAxis === "healthcare") {
+    var ylabel = "Healthcare (%):";
+  }
+  else if (chosenYAxis ==="age"){
+    var ylabel = "Smokes (%):";
+  }
+  else {
+    var ylabel = "Obese (%):";
+}
 
 
   var toolTip = d3.tip()
     .attr("class", "tooltip d3-tip")
     .offset([80, -60])
     .html(function(d) {
-      return (`${d.state}<br>${label} ${d[chosenXAxis]}`);
+      return (`${d.state}<br>${xlabel} ${d[chosenXAxis]}<br>${ylabel} ${d[chosenYAxis]}`);
     });
 
   // Create Circles Tooltip in the Chart
@@ -160,7 +171,7 @@ d3.csv("assets/data/data.csv").then(function(healthData){
  
   console.log(healthData)
 
-  // Parse health and data numbers
+  // Parse numbers for relevant datasets
   healthData.forEach(function(data){
     data.poverty = +data.poverty;
     data.healthcare = +data.healthcare;
@@ -176,9 +187,7 @@ d3.csv("assets/data/data.csv").then(function(healthData){
   var xLinearScale = xScale(healthData, chosenXAxis)
 
   // Create y scale function
-  var yLinearScale = d3.scaleLinear()
-  .domain([0, d3.max(healthData, d => d.healthcare)])
-  .range([height, 0]);
+  var yLinearScale = xScale(healthData, chosenYAxis)
 
   // Create axis functions
   var bottomAxis = d3.axisBottom(xLinearScale);
