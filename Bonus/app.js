@@ -63,37 +63,61 @@ function renderCircles(circlesGroup, newXScale, chosenXAxis) {
   return circlesGroup;
 }
 
-// function used for updating circles group with new tooltip
-function updateToolTip(chosenXAxis, circlesGroup) {
+function renderLabels(circleLabels, newXScale, chosenXAxis) {
 
-  var label;
+  circleLabels.transition()
+    .duration(1000)
+    .attr("x", d => newXScale(d[chosenXAxis]))
+    .attr("text-anchor", "middle");
+
+  return circleLabels
+}
+
+
+// function used for updating circles group with new tooltip
+function updateToolTip(chosenXAxis, circlesGroup, circleLabels) {
+
 
   if (chosenXAxis === "poverty") {
-    label = "Poverty:";
+    var label = "Poverty (%):";
   }
-  else if(chosenXaxis ==="age"){
-    label = "Age:"
+  else if (chosenXAxis ==="age"){
+    var label = "Age (Median):";
   }
   else {
-    label = "Income:";
+    var label = "Household Income (Median):";
   }
 
 
   var toolTip = d3.tip()
-    .attr("class", "d3-tip")
+    .attr("class", "tooltip d3-tip")
     .offset([80, -60])
     .html(function(d) {
       return (`${d.state}<br>${label} ${d[chosenXAxis]}`);
     });
 
+  // Create Circles Tooltip in the Chart
   circlesGroup.call(toolTip);
 
-
+  
   circlesGroup.on("mouseover", function(data) {
-    toolTip.show(data);
+    toolTip.show(data, this);
   })
     // onmouseout event
     .on("mouseout", function(data, index) {
+      toolTip.hide(data);
+    });
+
+  // Create Text Labels for Tooltip 
+
+  circleLabels.call(toolTip);
+
+  // Create Event Listeners to Display and Hide the Text Tooltip
+  circleLabels.on("mouseover", function(data) {
+    toolTip.show(data, this);
+  })
+    // onmouseout Event
+    .on("mouseout", function(data) {
       toolTip.hide(data);
     });
 
@@ -102,8 +126,8 @@ function updateToolTip(chosenXAxis, circlesGroup) {
 
 
 // Import data from csv
-d3.csv("assets/data/data.csv").then(function(healthData, err){
-  if(err) throw err;
+d3.csv("assets/data/data.csv").then(function(healthData){
+ 
   console.log(healthData)
 
   // Parse health and data numbers
@@ -149,6 +173,7 @@ d3.csv("assets/data/data.csv").then(function(healthData, err){
       .attr("cx", d => xLinearScale(d[chosenXAxis]))
       .attr("cy", d => yLinearScale(d.healthcare))
       .attr("r", "12")
+      .attr("opacity", ".75")
       .classed("stateCircle", true)
 
       
@@ -159,9 +184,9 @@ d3.csv("assets/data/data.csv").then(function(healthData, err){
     .data(healthData)
     .enter()
     .append("text")
-    .classed('stateText', true)
-    .attr("dx", d => xLinearScale(d[chosenXAxis]))
-    .attr("dy", d => yLinearScale(d.healthcare))
+    .attr("class", "stateText")
+    .attr("x", d => xLinearScale(d[chosenXAxis]))
+    .attr("y", d => yLinearScale(d.healthcare))
     .text(d => d.abbr)
 
  
@@ -208,7 +233,7 @@ d3.csv("assets/data/data.csv").then(function(healthData, err){
       .text("Income (Median)");
 
  // updateToolTip function above csv import
- var circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
+ var circlesGroup = updateToolTip(chosenXAxis, circlesGroup, circleLabels);
 
  // x axis labels event listener
  labelsGroup.selectAll("text")
@@ -232,15 +257,18 @@ d3.csv("assets/data/data.csv").then(function(healthData, err){
        // updates circles with new x values
        circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis);
 
+        // updates text new values 
+       circleLabels = renderLabels(circleLabels, xLinearScale, chosenXAxis);
+
        // updates tooltips with new info
-       circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
+       circlesGroup = updateToolTip(chosenXAxis, circlesGroup, circleLabels);
 
        // changes classes to change bold text
-       if (chosenXAxis === "age") {
-         ageLabel
+       if (chosenXAxis === "poverty") {
+         povertyLabel
            .classed("active", true)
            .classed("inactive", false);
-         povertyLabel
+         ageLabel
            .classed("active", false)
            .classed("inactive", true);
          incomeLabel
@@ -248,27 +276,27 @@ d3.csv("assets/data/data.csv").then(function(healthData, err){
            .classed("inactive", true);
        }
 
-       else if (chosenXAxis ==="income"){
+       else if (chosenXAxis ==="age"){
+        povertyLabel
+        .classed("active", false)
+        .classed("inactive", true);
+        ageLabel
+        .classed("active", true)
+        .classed("inactive", false);
+        incomeLabel
+        .classed("active", false)
+        .classed("inactive", true);
+       }
+       else {
+        povertyLabel
+        .classed("active", false)
+        .classed("inactive", true);
+        ageLabel
+        .classed("active", false)
+        .classed("inactive", true);
         incomeLabel
         .classed("active", true)
         .classed("inactive", false);
-        povertyLabel
-           .classed("active", false)
-           .classed("inactive", true);
-        ageLabel
-           .classed("active", false)
-           .classed("inactive", true);
-       }
-       else {
-        ageLabel
-          .classed("active", false)
-          .classed("inactive", true);
-        povertyLabel
-          .classed("active", true)
-          .classed("inactive", false);
-        incomeLabel
-          .classed("active", true)
-          .classed("inactive", false);
         
        }
      }
