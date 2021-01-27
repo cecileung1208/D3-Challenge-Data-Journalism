@@ -28,6 +28,7 @@ var chartGroup = svg.append("g")
 
 // Initial Params
 var chosenXAxis = "poverty";
+var chosenYAxis = "healthcare";
 
 // function used for updating x-scale var upon click on axis label
 function xScale(healthData, chosenXAxis) {
@@ -42,8 +43,21 @@ function xScale(healthData, chosenXAxis) {
 
 }
 
+// Function used for updating y-scale var upon click on axis label
+function yScale(healthData, chosenYAxis) {
+  // create scales
+  var yLinearScale = d3.scaleLinear()
+    .domain([d3.min(healthData, d => d[chosenYAxis]) * 0.8,
+      d3.max(healthData, d => d[chosenYAxis]) * 1.2
+    ])
+    .range([height, 0]);
+
+  return yLinearScale;
+
+}
+
 // function used for updating xAxis var upon click on axis label
-function renderAxes(newXScale, xAxis) {
+function renderXAxes(newXScale, xAxis) {
   var bottomAxis = d3.axisBottom(newXScale);
 
   xAxis.transition()
@@ -52,22 +66,38 @@ function renderAxes(newXScale, xAxis) {
 
   return xAxis;
 }
+
+// function used for updating yAxis var upon click on axis label
+
+function renderYAxes(newYScale, yAxis) {
+  var leftAxis = d3.axisBottom(newYScale);
+
+  yAxis.transition()
+    .duration(1000)
+    .call(leftAxis);
+
+  return yAxis;
+}
 // function used for updating circles group with a transition to
 // new circles
-function renderCircles(circlesGroup, newXScale, chosenXAxis) {
+function renderCircles(circlesGroup, newXScale, chosenXAxis, newYScale, chosenYAxis) {
 
   circlesGroup.transition()
     .duration(1000)
-    .attr("cx", d => newXScale(d[chosenXAxis]));
+    .attr("cx", d => newXScale(d[chosenXAxis]))
+    .attr("cy", d => newYScale(d[chosenYAxis]));
 
   return circlesGroup;
 }
-
-function renderLabels(circleLabels, newXScale, chosenXAxis) {
+}
+// function used for updating circles state abbr labels  with a transition to
+// new circles
+function renderLabels(circleLabels, newXScale, chosenXAxis, newYScale, chosenYAxis) {
 
   circleLabels.transition()
     .duration(1000)
     .attr("x", d => newXScale(d[chosenXAxis]))
+    .attr("y", d => newYScale(d[chosenYAxis]))
     .attr("text-anchor", "middle");
 
   return circleLabels
