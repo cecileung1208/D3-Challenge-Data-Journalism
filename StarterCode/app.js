@@ -1,7 +1,7 @@
 // @TODO: YOUR CODE HERE!
 
 
-// Set up our chart
+// Set up our chart area
 //================================
 var svgWidth = 960;
 var svgHeight = 500;
@@ -10,7 +10,7 @@ var margin = {
   top: 20,
   right: 40,
   bottom: 60,
-  left: 100
+  left: 60
 };
 
 var width = svgWidth - margin.left - margin.right;
@@ -86,8 +86,8 @@ d3.csv("assets/data/data.csv").then(function(healthData){
     // Create axes labels
     chartGroup.append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", 0 - margin.left + 40)
-      .attr("x", 0 - (height / 2))
+      .attr("y", 0 - margin.left )
+      .attr("x", 0- (height/1.5))
       .attr("dy", "1em")
       .attr("class", "axisText")
       .style("font-weight", "bold")
