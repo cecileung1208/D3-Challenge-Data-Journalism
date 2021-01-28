@@ -1,8 +1,6 @@
-// @TODO: YOUR CODE HERE!
+// 1. CREATE CHART AREA
+//---------------------------------------------------------------------------------------------
 
-
-// Set up our chart area
-//================================
 var svgWidth = 900;
 var svgHeight = 600;
 
@@ -16,7 +14,12 @@ var margin = {
 var width = svgWidth - margin.left - margin.right;
 var height = svgHeight - margin.top - margin.bottom;
 
-// Create an SVG wrapper, append an SVG group that will hold our chart, and shift the latter by left and top margins.
+// 2. SVG WRAPPER
+//---------------------------------------------------------------------------------------------
+// Create an SVG wrapper
+// Append an SVG group that will hold our chart
+// Shift the latter by left and top margins.
+
 var svg = d3.select("#scatter")
   .append("svg")
   .attr("width", svgWidth)
@@ -26,37 +29,38 @@ var chartGroup = svg.append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 
-// Initial Params
+// 3. SETTING FUNCTIONS FOR AXIS - SCALE, RENDERING
+//----------------------------------------------------------------------------------------------
+
+// Initial Params for default x and y-axis
 var chosenXAxis = "poverty";
 var chosenYAxis = "healthcare";
 
-// function used for updating x-scale var upon click on axis label
+// A. SCALE AXIS FUNCTION
+
+// Create x-axis scale function
 function xScale(healthData, chosenXAxis) {
-  // create scales
   var xLinearScale = d3.scaleLinear()
     .domain([d3.min(healthData, d => d[chosenXAxis]) * 0.8,
       d3.max(healthData, d => d[chosenXAxis]) * 1.2
     ])
     .range([0, width]);
-
   return xLinearScale;
-
 }
 
-// Function used for updating y-scale var upon click on axis label
+// Create y-axis scale function
 function yScale(healthData, chosenYAxis) {
-  // create scales
   var yLinearScale = d3.scaleLinear()
     .domain([d3.min(healthData, d => d[chosenYAxis]) * 0.8,
       d3.max(healthData, d => d[chosenYAxis]) * 1.2
     ])
     .range([height, 0]);
-
   return yLinearScale;
-
 }
 
-// function used for updating xAxis var upon click on axis label
+// B. RENDER AXIS FUNCTION - used for updating axis when clicking on a new axis label
+
+//  Create x-axis rendering function
 function renderXAxes(newXScale, xAxis) {
   var bottomAxis = d3.axisBottom(newXScale);
 
@@ -67,7 +71,7 @@ function renderXAxes(newXScale, xAxis) {
   return xAxis;
 }
 
-// function used for updating yAxis var upon click on axis label
+//  Create y-axis rendering function
 
 function renderYAxes(newYScale, yAxis) {
   var leftAxis = d3.axisLeft(newYScale);
@@ -78,8 +82,10 @@ function renderYAxes(newYScale, yAxis) {
 
   return yAxis;
 }
-// function used for updating circles group with a transition to
-// new circles
+
+//4. SETTING FUNCTIONS FOR CIRCLES GROUP - used for updating circles values when choosing different axis
+
+//  Setting circles rendering function
 function renderCircles(circlesGroup, newXScale, chosenXAxis, newYScale, chosenYAxis) {
 
   circlesGroup.transition()
@@ -90,21 +96,26 @@ function renderCircles(circlesGroup, newXScale, chosenXAxis, newYScale, chosenYA
   return circlesGroup;
 }
 
-// function used for updating circles state abbr labels  with a transition to
-// new circles
+//5. SETTING FUNCTIONS FOR CIRCLES LABEL - used for updating state abbr on the new circle that have been 
+//moved when choosing a different axis
+
+//  Setting labels rendering function
 function renderLabels(circleLabels, newXScale, chosenXAxis, newYScale, chosenYAxis) {
 
   circleLabels.transition()
     .duration(1000)
     .attr("x", d => newXScale(d[chosenXAxis]))
     .attr("y", d => newYScale(d[chosenYAxis]))
-    .attr("text-anchor", "middle");
+    .attr("class", "stateText");
 
   return circleLabels
 }
 
+//6. TOOLTIPS FUNCTION - used when hovering over the data points and displays information about the dataset
 
-// function used for updating circles group with new tooltip
+
+//Create Update Tooltip function where to update tooltip information based on the axis chosen
+
 function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, circleLabels) {
 
 // Set conditions for choosing x-axis labels
@@ -120,36 +131,37 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, circleLabels) {
 
 // Set conditions for choosing y-axis labels
   if (chosenYAxis === "healthcare") {
-    var ylabel = "Healthcare (%):";
+    var ylabel = "Healthcare (%): ";
   }
   else if (chosenYAxis ==="smokes"){
-    var ylabel = "Smokes (%):";
+    var ylabel = "Smokes: (%)";
   }
   else {
-    var ylabel = "Obesity (%):";
+    var ylabel = "Obesity: (%)";
 }
 
 
-  var toolTip = d3.tip()
-    .attr("class", "tooltip d3-tip")
-    .offset([80, -60])
-    .html(function(d) {
-      return (`${d.state}<br>${xlabel} ${d[chosenXAxis]}<br>${ylabel} ${d[chosenYAxis]}`);
-    });
+// 7. SETTING TOOLTIPS ON CIRCLE GROUPS
 
-  // Create Circles Tooltip in the Chart
-  circlesGroup.call(toolTip);
+// Create ToolTip Box to display information when datasets from x & y axis are selected
+var toolTip = d3.tip()
+.attr("class", "d3-tip")
+.offset([80, -60])
+.html(d => (`${d.state}<br>${xlabel} ${d[chosenXAxis]}<br>${ylabel} ${d[chosenYAxis]}`));
 
-  
-  circlesGroup.on("mouseover", function(data) {
-    toolTip.show(data, this);
+// Create Tooltip for Circle groups
+circlesGroup.call(toolTip);
+
+// Create Event Listeners to Display and Hide the Text Tooltip
+circlesGroup.on("mouseover", function(data) {
+  toolTip.show(data, this);
   })
-    // onmouseout event
+    //onmouseout event
     .on("mouseout", function(data, index) {
       toolTip.hide(data);
     });
 
-  // Create Text Labels for Tooltip 
+// 8. SETTING TOOLTIPS ON CIRCLE LABELS
 
   circleLabels.call(toolTip);
 
@@ -166,9 +178,9 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, circleLabels) {
 }
 
 
-// Import data from csv
+// 9.  IMPORT CSV DATA TO CREATE GRAPHS
 d3.csv("assets/data/data.csv").then(function(healthData){
- 
+  // Check if data is displayed correctly 
   console.log(healthData)
 
   // Parse numbers for relevant datasets
@@ -181,15 +193,11 @@ d3.csv("assets/data/data.csv").then(function(healthData){
     data.obesity = +data.obesity
   });
 
-  // Create scale functions
-
-  // x-Linear Scale function from csv import
+//10. INSERT xScale & yScale FUNCTIONS from CSV import
   var xLinearScale = xScale(healthData, chosenXAxis)
-
-  // Create y scale function
   var yLinearScale = yScale(healthData, chosenYAxis)
 
-  // Create axis functions
+  // Position axes
   var bottomAxis = d3.axisBottom(xLinearScale);
   var leftAxis = d3.axisLeft(yLinearScale);
 
@@ -205,7 +213,7 @@ d3.csv("assets/data/data.csv").then(function(healthData){
       .classed("y-axis", true)
       .call(leftAxis);
 
-  // Create Circles
+  //11. CREATE CIRCLES GROUP FROM CSV IMPORTS
       var circlesGroup = chartGroup.selectAll("circle")
       .data(healthData)
       .enter()
@@ -218,7 +226,7 @@ d3.csv("assets/data/data.csv").then(function(healthData){
 
       
 
-  //Add state abbr labels to the circles
+  //12. CREATE CIRCLES LABELS (STATE ABBR) FROM CSV IMPORTS
 
   var circleLabels = chartGroup.selectAll(".stateText")
     .data(healthData)
@@ -231,13 +239,13 @@ d3.csv("assets/data/data.csv").then(function(healthData){
 
  
 
-    // Create axes labels
+//13. DISPLAY AXIS LABEL
 
-    // Create group for two x-axis labels
+    // Create group for three x-axis labels
     var xlabelsGroup = chartGroup.append("g")
     .attr("transform", `translate(${width /2}, ${height + 20})`);
 
-    // append x-axis
+    // Append x-axis - poverty, age & income
     var povertyLabel = xlabelsGroup.append("text")
     .attr("x", 0)
     .attr("y", 20)
@@ -259,11 +267,12 @@ d3.csv("assets/data/data.csv").then(function(healthData){
     .classed("inactive", true)
     .text("Income (Median)");
 
-    //append y-axis
-
+       
+    // Create group for three y-axis labels
     var ylabelsGroup = chartGroup.append("g")
     .attr("transform", `translate(-35, ${height /2})`);
 
+    // Append y-axis - healthcare, smoke, and obseity
     var healthLabel = ylabelsGroup.append("text")
     .attr("transform", "rotate(-90)")
     .attr("y", -20)
@@ -292,14 +301,17 @@ d3.csv("assets/data/data.csv").then(function(healthData){
     .classed("inactive", true)
     .text("Obese (%)");
 
- // updateToolTip function above csv import
+ //14.  UPDATETOOLTIP FUNCTION FOR CIRCLES FROM CSV IMPORT
  var circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, circleLabels);
+
+ //15. ADDING AXIS LABELS FOR EVENT LISTENER
 
  // x axis labels event listener
  xlabelsGroup.selectAll("text")
    .on("click", function() {
      // get value of selection
      var value = d3.select(this).attr("value");
+
      if (value !== chosenXAxis) {
 
        // replaces chosenXAxis with value
@@ -370,22 +382,22 @@ ylabelsGroup.selectAll("text")
   var value = d3.select(this).attr("value");
   if (value !== chosenYAxis) {
 
-    // replaces chosenXAxis with value
+    // replaces chosenyAxis with value
     chosenYAxis = value;
 
-    // console.log(chosenXAxis)
+    // console.log(chosenYAxis)
 
     // functions here found above csv import
-    // updates x scale for new data
+    // updates y scale for new data
     yLinearScale = yScale(healthData, chosenYAxis);
 
-    // updates x axis with transition
+    // updates y axis with transition
     yAxis = renderYAxes(yLinearScale, yAxis);
 
-    // updates circles with new x values
+    // updates circles with new y values
     circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
 
-     // updates text new values 
+     // updates label values when circles move
     circleLabels = renderLabels(circleLabels, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
 
     // updates tooltips with new info
