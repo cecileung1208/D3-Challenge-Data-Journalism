@@ -1,6 +1,6 @@
 # D3-Challenge-Data-Journalism
 
-![Newsroom](https://media.giphy.com/media/v2xIous7mnEYg/giphy.gif)
+![Image](https://github.com/cecileung1208/D3-Challenge-Data-Journalism/blob/main/Images/newspaper.jpg)
 
 ## Background
 
