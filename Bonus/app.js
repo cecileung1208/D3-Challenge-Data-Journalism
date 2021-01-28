@@ -187,7 +187,7 @@ d3.csv("assets/data/data.csv").then(function(healthData){
   var xLinearScale = xScale(healthData, chosenXAxis)
 
   // Create y scale function
-  var yLinearScale = xScale(healthData, chosenYAxis)
+  var yLinearScale = yScale(healthData, chosenYAxis)
 
   // Create axis functions
   var bottomAxis = d3.axisBottom(xLinearScale);
@@ -262,7 +262,7 @@ d3.csv("assets/data/data.csv").then(function(healthData){
     //append y-axis
 
     var ylabelsGroup = chartGroup.append("g")
-    .attr("transform", `translate(-25, ${height / 1.5})`);
+    .attr("transform", `translate(-35, ${height /2})`);
 
     var healthLabel = ylabelsGroup.append("text")
     .attr("transform", "rotate(-90)")
@@ -271,6 +271,7 @@ d3.csv("assets/data/data.csv").then(function(healthData){
     .attr("dy", "1em")
     .attr("value", "healthcare")// value to grab for event listener
     .attr("class", "axisText")
+    .classed("active", true)
     .text("Lacks Healthcare (%)");
       
     var smokeLabel = ylabelsGroup.append("text")
@@ -279,7 +280,7 @@ d3.csv("assets/data/data.csv").then(function(healthData){
     .attr("x", 0)
     .attr("dy", "1em")
     .attr("value", "smokes")// value to grab for event listener
-    .attr("class", "axisText")
+    .classed("inactive", true)
     .text("Smokes (%)");
     
     var obeseLabel = ylabelsGroup.append("text")
@@ -288,7 +289,7 @@ d3.csv("assets/data/data.csv").then(function(healthData){
     .attr("x", 0)
     .attr("dy", "1em")
     .attr("value", "obesity")// value to grab for event listener
-    .attr("class", "axisText")
+    .classed("inactive", true)
     .text("Obese (%)");
 
  // updateToolTip function above csv import
