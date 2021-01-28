@@ -43,7 +43,7 @@ This scatterplot includes more demographics and risk factors. 3 additional label
 
 While the ticks on the axes allow us to infer approximate values for each circle, it's impossible to determine the true value without adding another layer of data. Entering tooltips can help developers can implement these in their D3 graphics to reveal a specific element's data when the user hovers their cursor over the element. Add tooltips to the circles and display each tooltip with the data that the user has selected. 
 
-The code is written in [app.js filel]() and details are in the [D3 data journailism - Muliple Axes folder](https://github.com/cecileung1208/D3-Challenge-Data-Journalism/tree/main/D3_data_journalism%20-%20MultiAxes)
+The code is written in [app.js file]() and details are in the [D3 data journailism - Muliple Axes folder](https://github.com/cecileung1208/D3-Challenge-Data-Journalism/tree/main/D3_data_journalism%20-%20MultiAxes)
 
 ![Image](https://github.com/cecileung1208/D3-Challenge-Data-Journalism/blob/main/Images/tooltip.gif)
 
