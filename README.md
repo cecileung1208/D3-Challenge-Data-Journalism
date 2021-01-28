@@ -22,8 +22,6 @@ The scatter plot represents each state with circle elements. the code is in the 
 
 * Create and situate your axes and labels to the left and bottom of the chart.
 
-* Note: You'll need to use `python -m http.server` to run the visualization. This will host the page at `localhost:8000` in your web browser.
-
 * Files and details are in the [D3 data journalism folder](https://github.com/cecileung1208/D3-Challenge-Data-Journalism/tree/main/D3_data_journalism)
 
 ![Images](https://github.com/cecileung1208/D3-Challenge-Data-Journalism/blob/main/Images/scatter.jpg)
@@ -37,7 +35,7 @@ Why make a static graphic when D3 lets you interact with your data?
 
 #### 1. More Data, More Dynamics
 
-This scatterplot includes more demographics and risk factors. 3 additional labels are placed on both the x-axis and y-axis. The user can decide whcih events to display by clicking on the various. Animate the transitions for your circles' locations as well as the range of your axes. 
+This scatter plot includes more demographics and risk factors. 3 additional labels are placed on both the x-axis and y-axis. The user can decide whcih events to display by clicking on the various. Animate the transitions for your circles' locations as well as the range of your axes. 
 
 #### 2. Incorporate d3-tip
 
