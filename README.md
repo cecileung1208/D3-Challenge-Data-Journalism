@@ -1,6 +1,6 @@
 # D3-Challenge-Data-Journalism
 
-![Image](https://github.com/cecileung1208/D3-Challenge-Data-Journalism/blob/main/Images/newspaper%20-%20Copy.jpg) - https://data.census.gov/cedsci/
+![Image](https://github.com/cecileung1208/D3-Challenge-Data-Journalism/blob/main/Images/newspaper%20-%20Copy.jpg)
 
 ## Background
 
@@ -8,8 +8,10 @@ The goal of this project is to use the US Census Bureau Health dataset provided 
 
 ## Requirements
 
-1.  Create a scatter plot between two of the data variables of `Healthcare vs. Poverty`.
-2.  Create an interactive scatter plot with multiple for `Demographics (age, income, poverty) vs Health Risks (healthcare, obesity, smoking rates)`
+Create a scatter plot graph with state abbreviation in the circles for the following:
+
+1.  Health Care vs. Poverty
+2.  Interactive Multiaxis Graph for Health Risk Factors (Health Care, Smoking, Obesity) vs. Demographic Factors (Poverty, Age, Household Income)
 
 ## Datasets
 
@@ -17,29 +19,22 @@ The goal of this project is to use the US Census Bureau Health dataset provided 
 
 ## Method
 
+* Import the data from the CSV file.
+* Set the locations and ranges for the x and y axes.
+* Plot the x and y axes.
+* Set the coordinates and dimensions for the circles representing the data for each state.
+* Plot the circles representing the data for each state.
+* Add a text label of each state's abbreviation within the appropriate circle for identification purposes.
+* Create html files and link the JavaScript files.
+
 ## Scripts
+
+1. [Health Care vs. Poverty](https://github.com/cecileung1208/Journalism-Data-Analysis/blob/main/D3_data_journalism/assets/js/app.js)
+2. [Multiaxis Plot](https://github.com/cecileung1208/Journalism-Data-Analysis/blob/main/D3_data_journalism%20-%20MultiAxes/assets/js/app.js)
+
 
 ## Results
 
-Welcome to the newsroom! I have just accepted a data visualization position for a major metro paper. My taks is to  with analyze the current trends shaping people's lives, as well as creating charts, graphs, and interactive elements to help readers understand your findings.
-
-The editor wants to run a series of feature stories about the health risks facing particular demographics. She's counting on me to sniff out the first story idea by sifting through information from the U.S. Census Bureau and the Behavioral Risk Factor Surveillance System.
-
-The data set included with the assignment is based on 2014 ACS 1-year estimates from the [US Census Bureau](https://data.census.gov/cedsci/). The current data set includes data on rates of income, obesity, poverty, etc. by state. MOE stands for "margin of error."
-
-
-### [Scatter Plot - Poverty vs Health Care](https://github.com/cecileung1208/D3-Challenge-Data-Journalism/tree/main/D3_data_journalism)
-
-
-Created a scatter plot between two of the data variables of `Healthcare vs. Poverty`.
-
-The scatter plot represents each state with circle elements. the code is in the [app.js](https://github.com/cecileung1208/D3-Challenge-Data-Journalism/blob/main/D3_data_journalism/app.js) extracted from the [data.csv](https://github.com/cecileung1208/D3-Challenge-Data-Journalism/tree/main/D3_data_journalism/assets/data) by using the `d3.csv` function. The scatter plot appear as per the below image with the followig requirements:
-
-* Include state abbreviations in the circles.
-
-* Create and situate your axes and labels to the left and bottom of the chart.
-
-* Files and details are in the [D3 data journalism folder](https://github.com/cecileung1208/D3-Challenge-Data-Journalism/tree/main/D3_data_journalism)
 
 ![Images](https://github.com/cecileung1208/D3-Challenge-Data-Journalism/blob/main/Images/scatter.jpg)
 - - -
