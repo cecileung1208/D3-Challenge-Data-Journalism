@@ -13,7 +13,7 @@ The goal of this project is to use the US Census Bureau Health dataset provided 
 
 ## Datasets
 
-[US Census Bureau Health dataset](https://github.com/cecileung1208/Journalism-Data-Analysis/tree/main/D3_data_journalism/assets/data)
+[US Census Bureau Health dataset](https://github.com/cecileung1208/Journalism-Data-Analysis/tree/main/D3_data_journalism/assets/data) - https://data.census.gov/cedsci/
 
 ## Method
 
