@@ -1,6 +1,6 @@
 # D3-Challenge-Data-Journalism
 
-![Image](https://github.com/cecileung1208/D3-Challenge-Data-Journalism/blob/main/Images/newspaper%20-%20Copy.jpg)
+![Image](https://github.com/cecileung1208/D3-Challenge-Data-Journalism/blob/main/Images/newspaper%20-%20Copy.jpg) - https://data.census.gov/cedsci/
 
 ## Background
 
@@ -12,6 +12,8 @@ The goal of this project is to use the US Census Bureau Health dataset provided 
 2.  Create an interactive scatter plot with multiple for `Demographics (age, income, poverty) vs Health Risks (healthcare, obesity, smoking rates)`
 
 ## Datasets
+
+[US Census Bureau Health dataset](https://github.com/cecileung1208/Journalism-Data-Analysis/tree/main/D3_data_journalism/assets/data)
 
 ## Method
 
