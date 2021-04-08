@@ -4,7 +4,12 @@
 
 ## Background
 
+The goal of this project is to use the US Census Bureau Health dataset provided to analyze the current trends shaping people's lives, as well as creating charts, graphs, and interactive elements to help readers understand your findings.  The current data set includes demographics factors such as age, income and poverty and health risks such as healthcare, obesity and smoking rates.
+
 ## Requirements
+
+1.  Create a scatter plot between two of the data variables of `Healthcare vs. Poverty`.
+2.  Create an interactive scatter plot with multiple for `Demographics (age, income, poverty) vs Health Risks (healthcare, obesity, smoking rates)`
 
 ## Datasets
 
