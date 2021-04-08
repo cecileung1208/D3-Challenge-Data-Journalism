@@ -42,6 +42,7 @@ Health Care vs. Poverty
 
 
 Multiaxis Graphs
+
 ![Image](https://github.com/cecileung1208/D3-Challenge-Data-Journalism/blob/main/Images/animated-scatter.gif)
 
 ![Image](https://github.com/cecileung1208/D3-Challenge-Data-Journalism/blob/main/Images/tooltip.gif)
