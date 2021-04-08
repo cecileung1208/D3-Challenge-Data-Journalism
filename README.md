@@ -36,8 +36,8 @@ Create a scatter plot graph with state abbreviation in the circles for the follo
 
 ## Visualizations
 
-
 Health Care vs. Poverty
+
 ![Images](https://github.com/cecileung1208/D3-Challenge-Data-Journalism/blob/main/Images/scatter.jpg)
 
 
