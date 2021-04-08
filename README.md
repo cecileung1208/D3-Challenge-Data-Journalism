@@ -34,7 +34,7 @@ Create a scatter plot graph with state abbreviation in the circles for the follo
 2. [Multiaxis Plot](https://github.com/cecileung1208/Journalism-Data-Analysis/blob/main/D3_data_journalism%20-%20MultiAxes/assets/js/app.js)
 
 
-## Visualizations
+## Results
 
 Health Care vs. Poverty
 
